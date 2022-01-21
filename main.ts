@@ -6,7 +6,7 @@ input.onButtonPressed(Button.B, function () {
 })
 serial.onDataReceived(serial.delimiters(Delimiters.CarriageReturn), function () {
     Comm = serial.readUntil(serial.delimiters(Delimiters.CarriageReturn))
-    if (Comm == "ADR 6") {
+    if (Comm == "ADR 06") {
         serial.writeLine("OK")
     } else if (Comm == "RST") {
         PC = 1
