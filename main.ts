@@ -13,10 +13,10 @@ serial.onDataReceived(serial.delimiters(Delimiters.CarriageReturn), function () 
     } else if (Comm == "CLS") {
         serial.writeLine("OK")
     } else if (Comm == "PV?") {
-        serial.writeLine("" + (PV))
+        serial.writeLine(PV.toString().substr(0,6))
     } else if (Comm == "MV?") {
         if (OUT == "ON") {
-            serial.writeLine("" + (PV + randint(-0.1, 0.1)))
+            serial.writeLine((PV + randint(-0.1, 0.1)).toString().substr(0,6))
         } else {
             serial.writeLine("0.0000")
         }
@@ -24,10 +24,10 @@ serial.onDataReceived(serial.delimiters(Delimiters.CarriageReturn), function () 
         PV = parseFloat(Comm.split(" ")[1])
         serial.writeLine("OK")
     } else if (Comm == "PC?") {
-        serial.writeLine("" + (PC))
+        serial.writeLine(PC.toString().substr(0,6))
     } else if (Comm == "MC?") {
         if (OUT == "ON") {
-            serial.writeLine("" + (MC + randint(-0.002, 0.002)))
+            serial.writeLine((MC + randint(-0.002, 0.002)).toString().substr(0,6))
         } else {
             serial.writeLine("0.0000")
         }
