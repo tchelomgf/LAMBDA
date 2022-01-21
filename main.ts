@@ -1,8 +1,15 @@
 input.onButtonPressed(Button.A, function () {
     MC = MC + 0.007
+    OUT = "ON"
+    led.plot(0, 0)
 })
 input.onButtonPressed(Button.B, function () {
-    MC = MC + 0.140
+    if (toogle) {
+        MC = MC + 0.14
+    }else{
+        MC = MC - 0.14
+    }
+    toogle = !toogle
 })
 serial.onDataReceived(serial.delimiters(Delimiters.CarriageReturn), function () {
     Comm = serial.readUntil(serial.delimiters(Delimiters.CarriageReturn))
@@ -13,15 +20,16 @@ serial.onDataReceived(serial.delimiters(Delimiters.CarriageReturn), function () 
         MC = 0
         PV = 0
         OUT = "OFF"
+        toogle = true
         led.unplot(0, 0)
         serial.writeLine("OK")
     } else if (Comm == "CLS") {
         serial.writeLine("OK")
     } else if (Comm == "PV?") {
-        serial.writeLine(PV.toString().substr(0,6))
+        serial.writeLine(PV.toString().substr(0, 6))
     } else if (Comm == "MV?") {
         if (OUT == "ON") {
-            serial.writeLine((PV + randint(-0.1, 0.1)).toString().substr(0,6))
+            serial.writeLine((PV + randint(-0.1, 0.1)).toString().substr(0, 6))
         } else {
             serial.writeLine("0.0000")
         }
@@ -29,10 +37,10 @@ serial.onDataReceived(serial.delimiters(Delimiters.CarriageReturn), function () 
         PV = parseFloat(Comm.split(" ")[1])
         serial.writeLine("OK")
     } else if (Comm == "PC?") {
-        serial.writeLine(PC.toString().substr(0,6))
+        serial.writeLine(PC.toString().substr(0, 6))
     } else if (Comm == "MC?") {
         if (OUT == "ON") {
-            serial.writeLine((MC + randint(-0.002, 0.002)).toString().substr(0,6))
+            serial.writeLine((MC + randint(-0.002, 0.002)).toString().substr(0, 6))
         } else {
             serial.writeLine("0.0000")
         }
@@ -44,6 +52,7 @@ serial.onDataReceived(serial.delimiters(Delimiters.CarriageReturn), function () 
     } else if (Comm == "OUT 0") {
         OUT = "OFF"
         MC = 0
+        toogle = true
         led.unplot(0, 0)
         serial.writeLine("OK")
     } else if (Comm == "OUT 1") {
@@ -57,9 +66,11 @@ serial.onDataReceived(serial.delimiters(Delimiters.CarriageReturn), function () 
 })
 let Comm = ""
 let OUT = ""
-let PV = 0
-let PC = 0
 let MC = 0
+let PC = 0
+let PV = 0
+let toogle = true
+toogle = true
 PC = 1
 MC = 0
 PV = 0
