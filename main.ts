@@ -9,6 +9,10 @@ serial.onDataReceived(serial.delimiters(Delimiters.CarriageReturn), function () 
     if (Comm == "ADR 6") {
         serial.writeLine("OK")
     } else if (Comm == "RST") {
+        PC = 1
+        MC = 0
+        PV = 0
+        OUT = "OFF"
         serial.writeLine("OK")
     } else if (Comm == "CLS") {
         serial.writeLine("OK")
