@@ -13,6 +13,7 @@ serial.onDataReceived(serial.delimiters(Delimiters.CarriageReturn), function () 
         MC = 0
         PV = 0
         OUT = "OFF"
+        led.unplot(0, 0)
         serial.writeLine("OK")
     } else if (Comm == "CLS") {
         serial.writeLine("OK")
